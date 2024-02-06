@@ -10,4 +10,4 @@ COPY ./conf/default /etc/nginx/sites-available/
 COPY ./tools/setup.sh /
 
 
-CMD [ "/setup.sh" ]
+CMD ["bash", "./setup.sh" ]
