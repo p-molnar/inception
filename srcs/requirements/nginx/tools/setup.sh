@@ -1,31 +1,22 @@
 #!/bin/bash
 
-openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/nginx-selfsigned.key -out $CERTS_ -subj "/C=MO/L=KH/O=1337/OU=student/CN=sahafid.42.ma"
 
-echo "
-server {
+
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout $SSL_KEY_PATH/$DOMAIN_NAME.key -out $SSL_CERTS_PATH/$DOMAIN_NAME.crt -subj $SUBJECT_FIELDS
+
+echo "server {
     listen 443 ssl;
     listen [::]:443 ssl;
 
-    #server_name www.$DOMAIN_NAME $DOMAIN_NAME;
+    ssl_certificate $SSL_CERTS_PATH/$DOMAIN_NAME.crt;
+    ssl_certificate_key $SSL_KEY_PATH/$DOMAIN_NAME.key;
+	ssl_protocols TLSv1.3;
+	
+	root /var/www/html;
+    index index.html index.htm index.nginx-debian.html;
 
-    ssl_certificate $CERTS_;
-    ssl_certificate_key /etc/ssl/private/nginx-selfsigned.key;" > /etc/nginx/sites-available/default
-
-
-echo '
-    ssl_protocols TLSv1.3;
-
-    index index.php;
-    root /var/www/html;
-
-    location ~ [^/]\.php(/|$) { 
-            try_files $uri =404;
-            fastcgi_pass wordpress:9000;
-            include fastcgi_params;
-            fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-        }
-} ' >>  /etc/nginx/sites-available/default
-
+	server_name $DOMAIN_NAME www.$DOMAIN_NAME;
+ 
+}" > /etc/nginx/sites-available/default
 
 nginx -g "daemon off;"

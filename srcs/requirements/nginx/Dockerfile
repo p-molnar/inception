@@ -1,13 +1,12 @@
-# pull penultimate stabil debian basic image
-FROM debian:bullseye
+FROM debian:10
 
-# install system wide deps for nginx
-RUN apt -yqq update
-RUN apt -yqq install nginx
-RUN apt -yqq install openssl
+# Install Nginx
+RUN apt-get -yqq update
+RUN apt-get -yqq install nginx
+RUN apt-get -yqq install openssl
 
-COPY ./conf/default /etc/nginx/sites-available/
-COPY ./tools/setup.sh /
+# copy relevant docs from host machine to container
+COPY "tools/setup.sh" "/"
 
-
-CMD ["bash", "./setup.sh" ]
+# Start Nginx
+CMD ["./setup.sh"]
