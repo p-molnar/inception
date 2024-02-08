@@ -5,7 +5,7 @@ up :
 	mkdir -p data/wordpress
 	docker-compose -f srcs/docker-compose.yml up
 
-down : 
+down :
 	docker-compose -f srcs/docker-compose.yml down
 
 start : 
