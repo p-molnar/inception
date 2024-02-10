@@ -10,4 +10,4 @@ COPY tools/setup.sh /
 COPY conf/wp-config.php /
 
 
-CMD ["./setup.sh" ]
+CMD ["./setup.sh"]
