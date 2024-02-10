@@ -1,51 +1,49 @@
-version: "3.5"
+version: "3.8"
 
 services:
   nginx:
     container_name: nginx
-    build: ./requirements/nginx/.
+    build: requirements/nginx/.
     image: pmolnar/nginx
     ports:
       - "443:443"
-    env_file:
-      - .env
-    networks:
-      - inception
-    restart: always
-
-  mariadb:
-    container_name: mariadb
-    build: ./requirements/mariadb/.
-    image: pmolnar/mariadb
-    # ports:
-    #   - "3306:3306"
-    env_file:
-      - .env
+    # depends_on:
+    #   - wordpress
     volumes:
-      - mariadb:/var/lib/mysql
-    networks:
-      - inception
+      - wordpress:/var/www/html
+    # networks:
+    #   - inception
+    env_file:
+      - .env
     restart: always
-
   wordpress:
     container_name: wordpress
-    build: ./requirements/wordpress/.
+    build: requirements/wordpress/.
     image: pmolnar/wordpress
-    # ports:
-    #   - "80:80"
-    depends_on:
-      - mariadb
+    # depends_on:
+    #   - mariadb
     volumes:
       - wordpress:/var/www/html
     env_file:
       - .env
-    networks:
-      - inception
+    # networks:
+    #   - inception
     restart: always
+  # mariadb:
+  #   container_name: mariadb
+  #   build: ./requirements/mariadb/.
+  #   image: pmolnar/mariadb
+  #   volumes:
+  #     - mariadb:/var/lib/mysql
+  #   env_file:
+  #     - .env
+  #   networks:
+  #     - inception
+  #   restart: always
 
-networks:
-  inception:
-    name: inception
+  # networks:
+  #   inception:
+  #     name: inception
 
 volumes:
   wordpress:
@@ -55,11 +53,10 @@ volumes:
       device: /Users/pmolnar/Documents/Universities.nosync/Codam/42cursus/inception/data/wordpress/
       o: bind
       type: none
-
-  mariadb:
-    name: mariadb
-    driver: local
-    driver_opts:
-      device: /Users/pmolnar/Documents/Universities.nosync/Codam/42cursus/inception/data/mysql/
-      o: bind
-      type: none
+  # mariadb:
+  #   name: mariadb
+  #   driver: local
+  #   driver_opts:
+  #     device: /Users/pmolnar/Documents/Universities.nosync/Codam/42cursus/inception/data/mysql/
+  #     o: bind
+  #     type: none
