@@ -9,7 +9,7 @@ done
 
 echo "CREATE DATABASE IF NOT EXISTS $DB_NAME ;" > init_db.cmd
 echo "CREATE USER IF NOT EXISTS '$DB_USER'@'%' IDENTIFIED BY '$DB_PASSWORD' ;" >> init_db.cmd
-echo "GRANT ALL PRIVILEGES ON $DB_USER.* TO '$DB_USER'@'%' ;" >> init_db.cmd
+echo "GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$DB_USER'@'%' ;" >> init_db.cmd
 # echo "ALTER USER 'root'@'localhost' IDENTIFIED BY '12345' ;" >> init_db.cmd
 echo "FLUSH PRIVILEGES;" >> init_db.cmd
 
