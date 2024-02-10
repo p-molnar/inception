@@ -5,6 +5,11 @@ up :
 	mkdir -p data/wordpress
 	docker-compose -f srcs/docker-compose.yml up
 
+clean: down
+	rm -rf data
+
+re: clean up
+
 down :
 	docker-compose -f srcs/docker-compose.yml down
 
@@ -13,7 +18,6 @@ start :
 
 stop : 
 	docker-compose -f srcs/docker-compose.yml stop
-
 
 status : 
 	docker ps
