@@ -7,12 +7,12 @@ services:
     image: pmolnar/nginx
     ports:
       - "443:443"
-    # depends_on:
-    #   - wordpress
+    depends_on:
+      - wordpress
     volumes:
-      - wordpress:/var/www/html
-    # networks:
-    #   - inception
+      - wordpress:/var/www/html/
+    networks:
+      - inception
     env_file:
       - .env
     restart: always
@@ -20,30 +20,31 @@ services:
     container_name: wordpress
     build: requirements/wordpress/.
     image: pmolnar/wordpress
-    # depends_on:
-    #   - mariadb
+    depends_on:
+      - mariadb
     volumes:
       - wordpress:/var/www/html
     env_file:
       - .env
-    # networks:
-    #   - inception
+    networks:
+      - inception
     restart: always
-  # mariadb:
-  #   container_name: mariadb
-  #   build: ./requirements/mariadb/.
-  #   image: pmolnar/mariadb
-  #   volumes:
-  #     - mariadb:/var/lib/mysql
-  #   env_file:
-  #     - .env
-  #   networks:
-  #     - inception
-  #   restart: always
 
-  # networks:
-  #   inception:
-  #     name: inception
+  mariadb:
+    container_name: mariadb
+    build: ./requirements/mariadb/.
+    image: pmolnar/mariadb
+    volumes:
+      - mariadb:/var/lib/mysql
+    env_file:
+      - .env
+    networks:
+      - inception
+    restart: always
+
+networks:
+  inception:
+    name: inception
 
 volumes:
   wordpress:
@@ -53,10 +54,10 @@ volumes:
       device: /Users/pmolnar/Documents/Universities.nosync/Codam/42cursus/inception/data/wordpress/
       o: bind
       type: none
-  # mariadb:
-  #   name: mariadb
-  #   driver: local
-  #   driver_opts:
-  #     device: /Users/pmolnar/Documents/Universities.nosync/Codam/42cursus/inception/data/mysql/
-  #     o: bind
-  #     type: none
+  mariadb:
+    name: mariadb
+    driver: local
+    driver_opts:
+      device: /Users/pmolnar/Documents/Universities.nosync/Codam/42cursus/inception/data/mysql/
+      o: bind
+      type: none
