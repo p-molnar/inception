@@ -6,14 +6,14 @@ echo "server {
     listen 443 ssl;
     listen [::]:443 ssl;
 
+    server_name $DOMAIN_NAME www.$DOMAIN_NAME;
+
     ssl_protocols TLSv1.3;
     ssl_certificate $SSL_CERTS_PATH/$DOMAIN_NAME.crt;
     ssl_certificate_key $SSL_KEY_PATH/$DOMAIN_NAME.key;
 	
     root /var/www/html;
     index index.php index.nginx-debian.html;
-
-    server_name $DOMAIN_NAME www.$DOMAIN_NAME;
 
     location ~ [^/]\\.php(/|$) {
         try_files \$uri =404;
@@ -23,6 +23,6 @@ echo "server {
     }
 }" > /etc/nginx/sites-available/default
 
-# service nginx start
+service nginx start
 
-nginx -g "daemon off;"
+# exec nginx -g daemon off"
