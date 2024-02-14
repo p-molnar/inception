@@ -6,8 +6,8 @@ RUN apt -yqq install php-fpm php-mysql
 RUN apt -yqq install curl
 
 
-COPY tools/setup.sh /
 COPY conf/wp-config.php /
+COPY tools/setup.sh /
 
 
 CMD ["./setup.sh"]
