@@ -1,5 +1,12 @@
 #!/bin/bash
 
+if [ -f "/var/www/html/wp-config.php" ]
+
+then 
+	echo "Wordpress already installed and set up"
+
+else
+
 mkdir -p var/www/html
 rm -rf var/www/html/*
 
@@ -38,7 +45,7 @@ sed -i 's/listen = \/run\/php\/php7.3-fpm.sock/listen = 9000/g' /etc/php/7.3/fpm
 
 
 mkdir /run/php
+fi
 
-/usr/sbin/php-fpm7.3 -F
-
-echo "RUNNINGGGGG"
+echo "executing php-fpm"
+exec /usr/sbin/php-fpm7.3 -F
