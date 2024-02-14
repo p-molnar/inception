@@ -23,6 +23,4 @@ echo "server {
     }
 }" > /etc/nginx/sites-available/default
 
-service nginx start
-
-# exec nginx -g daemon off"
+exec nginx -g "daemon off;"
