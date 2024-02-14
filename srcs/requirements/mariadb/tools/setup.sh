@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 if [ -d "/var/lib/mysql/$DB_NAME" ]
 
 then 
@@ -28,5 +27,5 @@ service mysql stop
 
 fi
 
-
+echo "executing mysql daemon"
 exec mysqld
