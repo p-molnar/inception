@@ -1,7 +1,14 @@
 #!/bin/bash
 
-service mysql start
 
+if [ -d "/var/lib/mysql/$DB_NAME" ]
+
+then 
+	echo "Database already exists"
+
+else
+
+service mysql start
 until mysqladmin ping -hlocalhost --silent; do
     echo "Waiting for MySQL service to start..."
     sleep 5
@@ -19,4 +26,7 @@ sleep 3
 
 service mysql stop
 
-mysqld
+fi
+
+
+exec mysqld
