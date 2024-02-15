@@ -1,62 +1,70 @@
 version: "3.8"
 
 services:
+  # Nginx service configuration
   nginx:
     container_name: nginx
     build: requirements/nginx/.
     image: pmolnar/nginx
     ports:
-      - "443:443"
+      - "443:443"  # Map host port 443 to container port 443 for HTTPS
     depends_on:
-      - wordpress
+      - wordpress  # Ensure Nginx starts after the WordPress service
     volumes:
-      - wordpress:/var/www/html/
+      - wordpress:/var/www/html/  # Mount the WordPress volume to serve content
     networks:
-      - inception
+      - inception  # Connect the service to the custom network 'inception'
     env_file:
-      - .env
-    restart: always
+      - .env  # Load environment variables from the .env file
+    restart: always  # Always restart the container on failure or system reboot
 
+  # WordPress service configuration
   wordpress:
     container_name: wordpress
     build: requirements/wordpress/.
     image: pmolnar/wordpress
     depends_on:
-      - mariadb
+      - mariadb  # Ensure WordPress starts after the MariaDB service
     volumes:
-      - wordpress:/var/www/html
+      - wordpress:/var/www/html  # Mount the WordPress volume to persist data
     networks:
-      - inception
+      - inception  # Connect the service to the custom network 'inception'
     env_file:
-      - .env
-    restart: always
+      - .env  # Load environment variables from the .env file
+    restart: always  # Always restart the container on failure or system reboot
 
+  # MariaDB service configuration
   mariadb:
     container_name: mariadb
     build: ./requirements/mariadb/.
     image: pmolnar/mariadb
     volumes:
-      - mariadb:/var/lib/mysql
+      - mariadb:/var/lib/mysql  # Mount the MariaDB volume to persist data
     env_file:
-      - .env
+      - .env  # Load environment variables from the .env file
     networks:
-      - inception
-    restart: always
+      - inception  # Connect the service to the custom network 'inception'
+    restart: always  # Always restart the container on failure or system reboot
 
 networks:
+  # Definition of a custom network named 'inception'
   inception:
     name: inception
 
 volumes:
+  # WordPress data volume configuration
   wordpress:
     name: wordpress
     driver_opts:
       device: /Users/pmolnar/Documents/Universities.nosync/Codam/42cursus/inception/data/wordpress/
       o: bind
+      type: none
 
+  # MariaDB data volume configuration
   mariadb:
     name: mariadb
     driver: local
     driver_opts:
       device: /Users/pmolnar/Documents/Universities.nosync/Codam/42cursus/inception/data/mysql/
       o: bind
+      type: none
