@@ -7,16 +7,16 @@ services:
     build: requirements/nginx/.
     image: pmolnar/nginx
     ports:
-      - "443:443"  # Map host port 443 to container port 443 for HTTPS
+      - "443:443" # Map host port 443 to container port 443 for HTTPS
     depends_on:
-      - wordpress  # Ensure Nginx starts after the WordPress service
+      - wordpress # Ensure Nginx starts after the WordPress service
     volumes:
-      - wordpress:/var/www/html/  # Mount the WordPress volume to serve content
+      - wordpress:/var/www/html/ # Mount the WordPress volume to serve content
     networks:
-      - inception  # Connect the service to the custom network 'inception'
+      - inception # Connect the service to the custom network 'inception'
     env_file:
-      - .env  # Load environment variables from the .env file
-    restart: always  # Always restart the container on failure or system reboot
+      - .env # Load environment variables from the .env file
+    restart: always # Always restart the container on failure or system reboot
 
   # WordPress service configuration
   wordpress:
@@ -24,14 +24,14 @@ services:
     build: requirements/wordpress/.
     image: pmolnar/wordpress
     depends_on:
-      - mariadb  # Ensure WordPress starts after the MariaDB service
+      - mariadb # Ensure WordPress starts after the MariaDB service
     volumes:
-      - wordpress:/var/www/html  # Mount the WordPress volume to persist data
+      - wordpress:/var/www/html # Mount the WordPress volume to persist data
     networks:
-      - inception  # Connect the service to the custom network 'inception'
+      - inception # Connect the service to the custom network 'inception'
     env_file:
-      - .env  # Load environment variables from the .env file
-    restart: always  # Always restart the container on failure or system reboot
+      - .env # Load environment variables from the .env file
+    restart: always # Always restart the container on failure or system reboot
 
   # MariaDB service configuration
   mariadb:
@@ -39,12 +39,12 @@ services:
     build: ./requirements/mariadb/.
     image: pmolnar/mariadb
     volumes:
-      - mariadb:/var/lib/mysql  # Mount the MariaDB volume to persist data
+      - mariadb:/var/lib/mysql # Mount the MariaDB volume to persist data
     env_file:
-      - .env  # Load environment variables from the .env file
+      - .env # Load environment variables from the .env file
     networks:
-      - inception  # Connect the service to the custom network 'inception'
-    restart: always  # Always restart the container on failure or system reboot
+      - inception # Connect the service to the custom network 'inception'
+    restart: always # Always restart the container on failure or system reboot
 
 networks:
   # Definition of a custom network named 'inception'
