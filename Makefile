@@ -1,8 +1,8 @@
 all : up
 
 up :
-	mkdir -p data/mysql
-	mkdir -p data/wordpress
+	mkdir -p /Users/pmolnar/data/mysql
+	mkdir -p /Users/pmolnar/data/wordpress
 	docker-compose -f srcs/docker-compose.yml up
 
 down : stop
@@ -29,10 +29,19 @@ rm_networks	:
 rm_containers :
 	docker rm $(docker ps -qa);
 
-fclean : stop rm_images rm_volumes rm_networks rm_containers
+fclean : stop
 	rm -rf data
+	docker container rm -f nginx
+	docker container rm -f wordpress
+	docker container rm -f mariadb
+	docker rmi -f pmolnar/wordpress
+	docker rmi -f pmolnar/nginx
+	docker rmi -f pmolnar/mariadb
+	docker volume rm mariadb
+	docker volume rm wordpress
+	docker network rm inception
 
-re: clean up
+re: up
 
 status : 
 	docker ps
