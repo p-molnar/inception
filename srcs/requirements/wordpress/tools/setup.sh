@@ -17,6 +17,7 @@ else
     mv /var/www/html/wp-cli.phar /usr/local/bin/wp
 
     # Download and configure WordPress
+    sleep 15
     wp core download --allow-root
     mv /wp-config.php /var/www/html/wp-config.php
 
@@ -42,13 +43,15 @@ else
     find /var/www/html -type d -exec chmod 755 {} \;
     find /var/www/html -type f -exec chmod 644 {} \;
 
+    service php7.4-fpm start
+
     # Configure PHP-FPM to listen on port '9000'
-    sed -i 's/listen = \/run\/php\/php7.3-fpm.sock/listen = 9000/g' /etc/php/7.3/fpm/pool.d/www.conf
+    sed -i 's/listen = \/run\/php\/php7.4-fpm.sock/listen = 9000/g' /etc/php/7.4/fpm/pool.d/www.conf
 
     # Create directory for PHP-FPM
-    mkdir /run/php
+    mkdir -p /run/php
 fi
 
 # Start PHP-FPM
 echo "executing php-fpm"
-exec /usr/sbin/php-fpm7.3 -F
+exec /usr/sbin/php-fpm7.4 -F

@@ -1,4 +1,4 @@
-FROM debian:10
+FROM debian:11
 
 RUN apt -yqq update
 RUN apt -yqq upgrade

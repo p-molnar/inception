@@ -1,4 +1,4 @@
-FROM debian:10
+FROM debian:11
 
 # Install Nginx
 RUN apt-get -yqq update

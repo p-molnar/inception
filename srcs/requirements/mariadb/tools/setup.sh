@@ -5,7 +5,7 @@ if [ -d "/var/lib/mysql/$DB_NAME" ]; then
     echo "Database already exists"
 else
     # Start MySQL service if the database directory doesn't exist
-    service mysql start
+    service mariadb start
 
     # Wait until MySQL service is accessible before proceeding
     until mysqladmin ping -hlocalhost --silent; do
@@ -28,7 +28,7 @@ else
     sleep 3
 
     # Stop the MySQL service
-    service mysql stop
+    service mariadb stop
 fi
 
 # Start the MySQL daemon
