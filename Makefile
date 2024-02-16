@@ -14,12 +14,22 @@ start :
 stop : 
 	docker-compose -f srcs/docker-compose.yml stop
 
-rm_images :
-	docker image rm -f pmolnar/nginx
-	docker image rm -f pmolnar/mariadb
-	docker image rm -f pmolnar/wordpress
+stop_all :
+	docker network rm $(docker network ls -q) 
 
-clean: down rm_images
+rm_images :
+	docker rmi $(docker images -qa);
+
+rm_volumes :
+	docker volume rm $(docker volume ls -q);
+
+rm_networks	:
+	docker network rm $(docker network ls -q) 2&> /dev/null;
+
+rm_containers :
+	docker rm $(docker ps -qa);
+
+fclean : stop rm_images rm_volumes rm_networks rm_containers
 	rm -rf data
 
 re: clean up
