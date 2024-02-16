@@ -1,0 +1,22 @@
+COMPOSE_PROJECT_NAME=		# name of project in Docker
+DOMAIN_NAME=				# URL of website
+
+# Database configurations
+DB_NAME=					# database name
+DB_USER=					# username owning the database
+DB_PASSWORD=				# password of database owner
+
+# Wordpress config
+WP_TITLE= 					# name of the website
+WP_ADMIN_USER= 				# username of Admin
+WP_ADMIN_PASSWORD=			# password of Admin
+WP_ADMIN_EMAIL= 			# email address of Admin
+
+WP_USER=					# name of regular user
+WP_USER_PASSWORD=			# password of regular user
+WP_USER_EMAIL=				# email address of regular user
+
+# Constants for nginx 
+SSL_KEY_PATH=/etc/ssl/private
+SSL_CERTS_PATH=/etc/ssl/certs
+SUBJECT_FIELDS=/C=NL/ST=Amsterdam/L=Amsterdam/O=Codam/OU=IT/CN=$DOMAIN_NAME
