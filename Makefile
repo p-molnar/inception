@@ -1,19 +1,19 @@
 all : up
 
 up :
-	rm -rf /Users/pmolnar/data/
-	mkdir -p /Users/pmolnar/data/mysql
-	mkdir -p /Users/pmolnar/data/wordpress
-	docker-compose -f srcs/docker-compose.yml up
+	rm -rf /home/pmolnar/data/
+	mkdir -p /home/pmolnar/data/mysql/
+	mkdir -p /home/pmolnar/data/wordpress/
+	docker compose -f srcs/docker-compose.yml up
 
 down : stop
-	docker-compose -f srcs/docker-compose.yml down
+	docker compose -f srcs/docker-compose.yml down
 
 start : 
-	docker-compose -f srcs/docker-compose.yml start
+	docker compose -f srcs/docker-compose.yml start
 
 stop : 
-	docker-compose -f srcs/docker-compose.yml stop
+	docker compose -f srcs/docker-compose.yml stop
 
 stop_all :
 	docker network rm $(docker network ls -q) 
@@ -31,7 +31,7 @@ rm_containers :
 	docker rm $(docker ps -qa);
 
 fclean : stop
-	rm -rf /Users/pmolnar/data/
+	rm -rf /home/pmolnar/data/
 	docker container rm -f nginx
 	docker container rm -f wordpress
 	docker container rm -f mariadb
